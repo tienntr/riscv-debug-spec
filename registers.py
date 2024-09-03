@@ -409,11 +409,11 @@ def toAdocIdentifier( *args ):
                 .replace("(", "_")
                 for a in args]
         ))
-    text = re.sub( "\s+", "", text )
+    text = re.sub( "\\s+", "", text )
     return text
 
 def toCIdentifier( text ):
-    return re.sub( "[^\w]", "_", text )
+    return re.sub( "[^\\w]", "_", text )
 
 def write_definitions( fd, registers ):
     for r in registers.registers:
@@ -707,8 +707,8 @@ def print_latex_index( registers ):
             print("%s & %s & %s & %s \\\\" % ( r.address, name, r.sdesc, page ))
         else:
             print("%s & %s & %s \\\\" % ( r.address, name, page ))
-    print("         \hline")
-    print("   \end{longtable}")
+    print("         \\hline")
+    print("   \\end{longtable}")
 
 def print_latex_custom( registers ):
     sub = "sub" * registers.depth
@@ -722,13 +722,13 @@ def print_latex_custom( registers ):
                         r.short, r.address ))
             else:
                 print("\\%ssection{%s ({\\tt %s})}" % ( sub, r.name, r.short ))
-            print("\index{%s}" % r.short)
+            print("\\index{%s}" % r.short)
         else:
             if r.address:
                 print("\\%ssection{%s (at %s)}" % ( sub, r.name, r.address ))
             else:
                 print("\\%ssection{%s}" % ( sub, r.name ))
-            print("\index{%s}" % r.name)
+            print("\\index{%s}" % r.name)
         if r.label and r.define:
             print("\\label{%s}" % toLatexIdentifier(registers.prefix, r.label))
         print(r.description)
@@ -777,7 +777,7 @@ def print_latex_custom( registers ):
 
                 # The actual field names
                 print("\\\\")
-                print("         \hline")
+                print("         \\hline")
                 first = True
                 for f in registerFields:
                     if first:
@@ -788,7 +788,7 @@ def print_latex_custom( registers ):
                     first = False
                     print("\\multicolumn{2}{%s}{$|%s|$}" % ( cols, f.name ))
                 print("\\\\")
-                print("         \hline")
+                print("         \\hline")
 
                 # Size of each field in bits
                 print(" & ".join( "\\multicolumn{2}{c}{\\scriptsize %s}" % f.length() for f in registerFields ))
